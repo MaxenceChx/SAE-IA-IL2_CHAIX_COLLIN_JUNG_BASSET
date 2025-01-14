@@ -1,1 +1,8 @@
-# SAE-IA-IL2_CHAIX_COLLIN_JUNG_BASSET
+# Projet IA - AIL2
+
+## Membres du projet
+
+- **Maxence CHAIX**
+- **Alex COLLIN**
+- **Inès JUNG**
+- **Alec BASSET**
