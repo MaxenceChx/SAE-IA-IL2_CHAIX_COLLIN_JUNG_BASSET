@@ -95,11 +95,13 @@ public class TestMLPComplet {
                         break;
                     }
                 }
-                if (!allExamplesCorrect) break;
+                if (!allExamplesCorrect) {
+                    break;
+                }
             }
 
-            if (allExamplesCorrect) {
-                System.out.printf("Architecture: %s - Époque %d - Tous exemples corrects: %b%n", 
+            if (allExamplesCorrect || epoch == MAX_EPOCHS) {
+                System.out.printf("Architecture: %s - Itération %d - Tous exemples corrects: %b%n", 
                     Arrays.toString(architecture), epoch, allExamplesCorrect);
             }
 
@@ -109,7 +111,7 @@ public class TestMLPComplet {
         // Test final
         System.out.println("Résultats finaux:");
         evaluateNetwork(mlp, inputs, outputs);
-        System.out.printf("Convergence: %s, Époques: %d%n", 
+        System.out.printf("Convergence: %s, Itérations: %d%n", 
             allExamplesCorrect ? "Réussie" : "Échec", epoch);
     }
 
