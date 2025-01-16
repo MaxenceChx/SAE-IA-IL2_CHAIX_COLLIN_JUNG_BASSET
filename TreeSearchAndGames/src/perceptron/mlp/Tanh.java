@@ -1,6 +1,6 @@
-package perceptron;
+package perceptron.mlp;
 
-public class Tanh {
+public class Tanh implements TransferFunction {
 
     /**
      * Function de transfert

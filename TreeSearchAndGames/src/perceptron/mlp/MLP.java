@@ -1,5 +1,4 @@
-package perceptron;
-
+package perceptron.mlp;
 
 public class MLP  {
     protected double fLearningRate = 0.6;

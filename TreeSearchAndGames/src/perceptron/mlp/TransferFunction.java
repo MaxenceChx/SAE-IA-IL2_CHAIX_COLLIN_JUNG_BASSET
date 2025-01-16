@@ -1,6 +1,6 @@
-package perceptron;
+package perceptron.mlp;
 
-interface TransferFunction  {
+public interface TransferFunction  {
     /**
      * Function de transfert
      * @param value entrée

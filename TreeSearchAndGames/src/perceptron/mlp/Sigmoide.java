@@ -1,4 +1,4 @@
-package perceptron;
+package perceptron.mlp;
 
 public class Sigmoide implements TransferFunction{
 

@@ -1,4 +1,4 @@
-package perceptron;
+package perceptron.mlp;
 
 class Layer {
     public Neuron Neurons[];
