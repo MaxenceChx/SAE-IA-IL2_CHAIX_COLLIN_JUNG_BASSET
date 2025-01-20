@@ -9,7 +9,7 @@ import java.util.List;
 public class MLPTest {
 
     // Données d'entraînement pour AND, OR, XOR
-    private static final double[][] AND_INPUTS = {
+    private static final double[][] INPUTS = {
             {0, 0},
             {0, 1},
             {1, 0},
@@ -30,13 +30,6 @@ public class MLPTest {
             {1, 1}
     };
 
-    private static final double[][] OR_INPUTS = {
-            {0, 0},
-            {0, 1},
-            {1, 0},
-            {1, 1}
-    };
-
     private static final double[][] OR_OUTPUTS_1D = {
             {0},
             {1},
@@ -49,13 +42,6 @@ public class MLPTest {
             {1, 0},
             {1, 0},
             {1, 0}
-    };
-
-    private static final double[][] XOR_INPUTS = {
-            {0, 0},
-            {0, 1},
-            {1, 0},
-            {1, 1}
     };
 
     private static final double[][] XOR_OUTPUTS_1D = {
@@ -76,21 +62,22 @@ public class MLPTest {
     private static final int MAX_EPOCHS       = 50_000;
 
     public static void main(String[] args) {
-
-
         TransferFunction[] functions = { new Sigmoide(), new Tanh() };
 
-        // Différentes architectures de réseaux de neurones
+        // Différentes architectures de réseaux de neurones (couche cachées uniquement)
         int[][] architectures = {
-                {2, 2, 1},
-                {2, 3, 2}
+                {2},
+                {3}
         };
 
         // Liste des opérateurs ET, OU, XOR
         List<OpTest> tests = Arrays.asList(
-                new OpTest("AND", AND_INPUTS, AND_OUTPUTS_1D, AND_OR_OUTPUTS_2D),
-                new OpTest("OR",  OR_INPUTS,  OR_OUTPUTS_1D,  OR_NAND_OUTPUTS_2D),
-                new OpTest("XOR", XOR_INPUTS, XOR_OUTPUTS_1D, XOR_AND_OUTPUTS_2D)
+                new OpTest("AND", INPUTS, AND_OUTPUTS_1D),
+                new OpTest("AND-OR", INPUTS, AND_OR_OUTPUTS_2D),
+                new OpTest("OR",  INPUTS,  OR_OUTPUTS_1D),
+                new OpTest("OR-NAND", INPUTS, OR_NAND_OUTPUTS_2D),
+                new OpTest("XOR", INPUTS, XOR_OUTPUTS_1D),
+                new OpTest("XOR-AND", INPUTS, XOR_AND_OUTPUTS_2D)
         );
 
         // On parcourt chaque fonction de transfert
@@ -101,20 +88,18 @@ public class MLPTest {
 
                 int outputSize = arch[arch.length - 1];
 
-                System.out.println("\n--- Architecture " + Arrays.toString(arch) + " ---");
-
                 for (OpTest op : tests) {
+                    int[] architecture = getArchitecture(op.inputs, op.outputs, arch);
 
-                    // Sélection des outputs selon la taille de sortie
-                    double[][] outputs = (outputSize == 1) ?
-                            op.outputs1D :
-                            op.outputs2D;
+                    System.out.println("\n--- Architecture " + Arrays.toString(architecture) + " ---");
+
+                    double[][] outputs = outputSize == 1 ? op.outputs : op.outputs;
 
                     System.out.println("Test de l'opérateur " + op.name + " (Sortie "
                             + (outputSize == 1 ? "1D" : "2D") + ")");
 
                     // Création du MLP
-                    MLP mlp = new MLP(arch, LEARNING_RATE, tf);
+                    MLP mlp = new MLP(architecture, LEARNING_RATE, tf);
 
                     // Entraînement
                     trainMLP(mlp, op.inputs, outputs);
@@ -211,7 +196,6 @@ public class MLPTest {
     private record OpTest(
             String name,
             double[][] inputs,
-            double[][] outputs1D,
-            double[][] outputs2D
+            double[][] outputs
     ) {}
 }
