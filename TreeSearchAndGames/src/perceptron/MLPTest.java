@@ -126,6 +126,19 @@ public class MLPTest {
         }
     }
 
+    public static int[] getArchitecture(double[][] inputs, double[][] outputs, int[] arch) {
+        int[] res = new int[2+arch.length];
+
+        res[0] = inputs[0].length;
+        res[res.length-1] = outputs[0].length;
+
+        for (int i = 0; i < arch.length; i++) {
+            res[i+1] = arch[i];
+        }
+
+        return res;
+    }
+
     /**
      * Entraîne le réseau avec permutation des données à chaque epoch.
      */
