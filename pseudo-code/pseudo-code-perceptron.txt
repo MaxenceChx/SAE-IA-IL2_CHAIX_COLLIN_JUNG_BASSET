@@ -1,0 +1,64 @@
+Configuration du mlp : 
+
+choix de larchitecture
+choix du pas d'apprentissage 
+choix de la fonction d'activation
+
+initialtisation du max itérations : max_epochs
+
+création du mlp (architecture, pas, fonction_transfert)
+
+- inputs : données de départ 
+- outputs : données attendu après le traitement 
+entrainement(mlp, inputs, outputs)
+ indices ← liste vide
+    POUR i DE 0 À (longueur(inputs) - 1) FAIRE
+        ajouter i À indices
+    FIN POUR
+
+    epoch ← 0
+
+    TANT QUE epoch < max_epochs FAIRE
+        mélanger_aléatoirement(indices)
+
+        POUR chaque idx DANS indices FAIRE
+            mlp.backPropagate(inputs[idx], outputs[idx])
+        FIN POUR
+
+        SI allExamplesCorrect(mlp, inputs, outputs) ALORS
+            afficher("==> Convergence après " + epoch + " époques.")
+            RETOURNER
+        FIN SI
+
+        epoch ← epoch + 1
+    FIN TANT QUE
+
+    afficher("==> Max epochs (" + max_epochs + ") atteint, arrêt de l'entraînement.")
+FIN	
+
+évaluation_finale(mlp, inputs, outputs)
+    correct ← 0
+
+    POUR i DE 0 À (longueur(inputs) - 1) FAIRE
+        result ← mlp.execute(inputs[i])
+        rounded ← tableau_de_la_même_taille_que(result)
+
+        isCorrect ← VRAI
+
+        POUR j DE 0 À (longueur(result) - 1) FAIRE
+            rounded[j] ← arrondir(result[j])  // équivalent de Math.round
+            SI rounded[j] ≠ outputs[i][j] ALORS
+                isCorrect ← FAUX
+            FIN SI
+        FIN POUR
+
+        SI isCorrect ALORS
+            correct ← correct + 1
+        FIN SI
+    FIN POUR
+
+    accuracy ← (100.0 × correct) / longueur(inputs)
+FIN
+
+
+
