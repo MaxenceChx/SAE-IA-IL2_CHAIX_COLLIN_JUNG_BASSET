@@ -27,13 +27,13 @@ public class Main {
                 case 1: // Créer ou réinitialiser le MLP
                     System.out.println("=== Configuration du MLP ===");
 
-                    System.out.print("Nombre de neurones par couche (ex: 4,3,2): ");
+                    System.out.print("Nombre de neurones par couche (couches cahées uniquement) (ex: 4,3,2): ");
                     String archInput = scanner.next();
                     int[] arch = Arrays.stream(archInput.split(","))
                             .mapToInt(Integer::parseInt)
                             .toArray();
 
-                    System.out.print("Taux d'apprentissage (ex: 0.01): ");
+                    System.out.print("Taux d'apprentissage (ex: 0,01): ");
                     double learningRate = scanner.nextDouble();
 
                     System.out.print("Fonction de transfert (tanh/sigmoid): ");
