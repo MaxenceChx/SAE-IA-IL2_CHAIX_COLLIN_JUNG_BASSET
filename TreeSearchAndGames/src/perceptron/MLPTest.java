@@ -23,10 +23,10 @@ public class MLPTest {
             {1}
     };
 
-    private static final double[][] AND_OUTPUTS_2D = {
+    private static final double[][] AND_OR_OUTPUTS_2D = {
             {0, 0},
-            {0, 0},
-            {0, 0},
+            {0, 1},
+            {0, 1},
             {1, 1}
     };
 
@@ -44,11 +44,11 @@ public class MLPTest {
             {1}
     };
 
-    private static final double[][] OR_OUTPUTS_2D = {
-            {0, 0},
-            {1, 1},
-            {1, 1},
-            {1, 1}
+    private static final double[][] OR_NAND_OUTPUTS_2D = {
+            {0, 1},
+            {1, 0},
+            {1, 0},
+            {1, 0}
     };
 
     private static final double[][] XOR_INPUTS = {
@@ -65,11 +65,11 @@ public class MLPTest {
             {0}
     };
 
-    private static final double[][] XOR_OUTPUTS_2D = {
+    private static final double[][] XOR_AND_OUTPUTS_2D = {
             {0, 0},
-            {1, 1},
-            {1, 1},
-            {0, 0}
+            {1, 0},
+            {1, 0},
+            {0, 1}
     };
 
     private static final double LEARNING_RATE = 0.1;
@@ -88,9 +88,9 @@ public class MLPTest {
 
         // Liste des opérateurs ET, OU, XOR
         List<OpTest> tests = Arrays.asList(
-                new OpTest("AND", AND_INPUTS, AND_OUTPUTS_1D, AND_OUTPUTS_2D),
-                new OpTest("OR",  OR_INPUTS,  OR_OUTPUTS_1D,  OR_OUTPUTS_2D),
-                new OpTest("XOR", XOR_INPUTS, XOR_OUTPUTS_1D, XOR_OUTPUTS_2D)
+                new OpTest("AND", AND_INPUTS, AND_OUTPUTS_1D, AND_OR_OUTPUTS_2D),
+                new OpTest("OR",  OR_INPUTS,  OR_OUTPUTS_1D,  OR_NAND_OUTPUTS_2D),
+                new OpTest("XOR", XOR_INPUTS, XOR_OUTPUTS_1D, XOR_AND_OUTPUTS_2D)
         );
 
         // On parcourt chaque fonction de transfert
