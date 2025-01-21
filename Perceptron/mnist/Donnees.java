@@ -3,6 +3,7 @@ package mnist;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Random;
 
 public class Donnees {
     private Imagette[] imagettes;
@@ -56,6 +57,17 @@ public class Donnees {
 
     public int getTaille() {
         return imagettes.length;
+    }
+
+    public void shuffle() {
+        Random random = new Random();
+        for (int i = imagettes.length - 1; i > 0; i--) {
+            int index = random.nextInt(i + 1); // Génère un index aléatoire entre 0 et i
+            // Échange les positions entre imagettes[i] et imagettes[index]
+            Imagette temp = imagettes[i];
+            imagettes[i] = imagettes[index];
+            imagettes[index] = temp;
+        }
     }
 
     public double[][] getInputs() {

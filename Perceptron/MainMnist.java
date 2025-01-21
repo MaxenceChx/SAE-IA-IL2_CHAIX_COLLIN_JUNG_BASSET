@@ -14,13 +14,13 @@ public class MainMnist {
         Donnees testData = new Donnees(testImagePath, testLabelPath);
 
         // Initialisation des paramètres du MLP
-        int[] layers = {784, 20, 10};
-        double learningRate = 0.1;
-        MLP mlp = new MLP(layers, learningRate, new Sigmoide());
+        int[] layers = {784, 50, 50, 10};
+        double learningRate = 0.001;
+        MLP mlp = new MLP(layers, learningRate, new Tanh());
 
         // Paramètres d'entraînement
-        int epochsPerTraining = 5; // Nombre d'époques par phase d'entraînement
-        int totalTrainingPhases = 10; // Nombre total de phases (train + test)
+        int epochsPerTraining = 10; // Nombre d'époques par phase d'entraînement
+        int totalTrainingPhases = 100; // Nombre total de phases (train + test)
         int batchSize = 1000;        // Taille du sous-échantillon
         int startIndex = 0;          // Indice de départ pour l'entraînement et le test
 
@@ -51,6 +51,8 @@ public class MainMnist {
         double totalError = 0.0;
         int endIndex = Math.min(startIndex + batchSize, data.getTaille());
 
+        data.shuffle();
+
         for (int i = startIndex; i < endIndex; i++) {
             double[] input = data.getInputs()[i];
             double[] output = data.getOutputs()[i];
@@ -70,6 +72,8 @@ public class MainMnist {
     public static double evaluate(MLP mlp, Donnees data, int startIndex, int batchSize) {
         double totalError = 0.0;
         int endIndex = data.getTaille();
+
+        data.shuffle();
 
         for (int i = startIndex; i < endIndex; i++) {
             double[] input = data.getInputs()[i];
