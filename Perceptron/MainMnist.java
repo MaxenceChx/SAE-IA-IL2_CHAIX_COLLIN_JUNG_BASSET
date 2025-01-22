@@ -1,4 +1,5 @@
 import mnist.Donnees;
+
 import mlp.*;
 
 public class MainMnist {
@@ -10,18 +11,20 @@ public class MainMnist {
         String testLabelPath = "data/t10k-labels-idx1-ubyte";
 
         // Chargement des données
+        System.out.println("Chargement des données d'entraînement...");
         Donnees trainData = new Donnees(trainImagePath, trainLabelPath);
+        System.out.println("Chargement des données de test...");
         Donnees testData = new Donnees(testImagePath, testLabelPath);
 
         // Initialisation des paramètres du MLP
-        int[] layers = {784, 50, 50, 10};
-        double learningRate = 0.001;
-        MLP mlp = new MLP(layers, learningRate, new Tanh());
+        int[] layers = {784, 512, 10};
+        double learningRate = 0.09;
+        MLP mlp = new MLP(layers, learningRate, new Sigmoide());
 
         // Paramètres d'entraînement
         int epochsPerTraining = 10; // Nombre d'époques par phase d'entraînement
         int totalTrainingPhases = 100; // Nombre total de phases (train + test)
-        int batchSize = 1000;        // Taille du sous-échantillon
+        int batchSize = 50;        // Taille du sous-échantillon
         int startIndex = 0;          // Indice de départ pour l'entraînement et le test
 
         for (int phase = 1; phase <= totalTrainingPhases; phase++) {
@@ -67,11 +70,13 @@ public class MainMnist {
      * @param data Ensemble de données de test.
      * @param startIndex Indice de départ dans les données.
      * @param batchSize Nombre d'échantillons à traiter.
-     * @return Erreur moyenne sur le sous-ensemble de données.
+     * @return Pourcentage d'erreurs (entre 0 et 1).
      */
     public static double evaluate(MLP mlp, Donnees data, int startIndex, int batchSize) {
-        double totalError = 0.0;
-        int endIndex = data.getTaille();
+        int totalExamples = 0; // Nombre total d'exemples évalués
+        int incorrectPredictions = 0; // Nombre de prédictions incorrectes
+
+        int endIndex = Math.min(startIndex + batchSize, data.getTaille());
 
         data.shuffle();
 
@@ -80,10 +85,32 @@ public class MainMnist {
             double[] expectedOutput = data.getOutputs()[i];
             double[] actualOutput = mlp.execute(input);
 
-            for (int j = 0; j < actualOutput.length; j++) {
-                totalError += Math.abs(expectedOutput[j] - actualOutput[j]);
+            // Trouver l'indice de la valeur maximale dans actualOutput
+            int predictedIndex = 0;
+            for (int j = 1; j < actualOutput.length; j++) {
+                if (actualOutput[j] > actualOutput[predictedIndex]) {
+                    predictedIndex = j;
+                }
             }
+
+            // Trouver l'indice du 1 attendu dans expectedOutput
+            int expectedIndex = 0;
+            for (int j = 0; j < expectedOutput.length; j++) {
+                if (expectedOutput[j] == 1.0) {
+                    expectedIndex = j;
+                    break;
+                }
+            }
+
+            // Vérifier si la prédiction est correcte
+            if (predictedIndex != expectedIndex) {
+                incorrectPredictions++;
+            }
+
+            totalExamples++;
         }
-        return totalError / (endIndex - startIndex);
+
+        // Retourner le pourcentage d'erreurs
+        return (double) incorrectPredictions / totalExamples;
     }
 }
