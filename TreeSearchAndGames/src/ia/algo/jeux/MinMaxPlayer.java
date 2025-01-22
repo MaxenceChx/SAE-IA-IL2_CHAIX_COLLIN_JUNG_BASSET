@@ -37,7 +37,7 @@ public class MinMaxPlayer extends Player {
             incStateCounter();
             ActionValuePair result = minValue(nextState, depth + 1);
 
-            if (result.getValue() > maxValue) {
+            if (result.getValue() >= maxValue) {
                 maxValue = result.getValue();
                 bestAction = action;
             }
@@ -58,7 +58,7 @@ public class MinMaxPlayer extends Player {
             incStateCounter();
             ActionValuePair result = maxValue(nextState, depth + 1);
 
-            if (result.getValue() < minValue) {
+            if (result.getValue() <= minValue) {
                 minValue = result.getValue();
                 bestAction = action;
             }

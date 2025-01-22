@@ -11,20 +11,20 @@ public class AlphaBetaPlayer extends Player {
 
     public AlphaBetaPlayer(Game g, boolean player_one, int max_depth) {
         super(g, player_one);
-        this.name = "MinMaxAlphaBeta";
+        this.name = "AlphaBeta";
         this.max_depth = (max_depth <= 0) ? Integer.MAX_VALUE : max_depth;
     }
 
     @Override
     public Action getMove(GameState state) {
         if (this.player == PLAYER1) {
-            return maxValue(state, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0).getAction();
+            return maxValue(state, 0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY).getAction();
         } else {
-            return minValue(state, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 0).getAction();
+            return minValue(state, 0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY).getAction();
         }
     }
 
-    private ActionValuePair maxValue(GameState state, double alpha, double beta, int depth) {
+    private ActionValuePair maxValue(GameState state, int depth, double alpha, double beta) {
         if (state.isFinalState() || depth >= max_depth) {
             return new ActionValuePair(null, state.getGameValue());
         }
@@ -35,24 +35,24 @@ public class AlphaBetaPlayer extends Player {
         for (Action action : game.getActions(state)) {
             GameState nextState = (GameState) game.doAction(state, action);
             incStateCounter();
-            ActionValuePair result = minValue(nextState, alpha, beta, depth + 1);
+            ActionValuePair result = minValue(nextState, depth + 1, alpha, beta);
 
             if (result.getValue() > maxValue) {
                 maxValue = result.getValue();
                 bestAction = action;
-
-                if (maxValue > alpha) {
-                    alpha = maxValue;
-                }
-                if (maxValue >= beta) {
-                    return new ActionValuePair(bestAction, maxValue);
-                }
             }
+
+            if (maxValue >= beta) {
+                return new ActionValuePair(bestAction, maxValue); // Beta cutoff
+            }
+
+            alpha = Math.max(alpha, maxValue);
         }
+
         return new ActionValuePair(bestAction, maxValue);
     }
 
-    private ActionValuePair minValue(GameState state, double alpha, double beta, int depth) {
+    private ActionValuePair minValue(GameState state, int depth, double alpha, double beta) {
         if (state.isFinalState() || depth >= max_depth) {
             return new ActionValuePair(null, state.getGameValue());
         }
@@ -63,20 +63,20 @@ public class AlphaBetaPlayer extends Player {
         for (Action action : game.getActions(state)) {
             GameState nextState = (GameState) game.doAction(state, action);
             incStateCounter();
-            ActionValuePair result = maxValue(nextState, alpha, beta, depth + 1);
+            ActionValuePair result = maxValue(nextState, depth + 1, alpha, beta);
 
             if (result.getValue() < minValue) {
                 minValue = result.getValue();
                 bestAction = action;
-
-                if (minValue < beta) {
-                    beta = minValue;
-                }
-                if (minValue <= alpha) {
-                    return new ActionValuePair(bestAction, minValue);
-                }
             }
+
+            if (minValue <= alpha) {
+                return new ActionValuePair(bestAction, minValue); // Alpha cutoff
+            }
+
+            beta = Math.min(beta, minValue);
         }
+
         return new ActionValuePair(bestAction, minValue);
     }
 }
