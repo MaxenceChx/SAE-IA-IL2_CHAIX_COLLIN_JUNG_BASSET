@@ -17,13 +17,16 @@ public class MinMaxPlayer extends Player {
 
     @Override
     public Action getMove(GameState state) {
-        return maxValue(state, 0).getAction();
+        if (this.player == PLAYER1) {
+            return maxValue(state, 0).getAction();
+        } else {
+            return minValue(state, 0).getAction();
+        }
     }
 
     private ActionValuePair maxValue(GameState state, int depth) {
         if (state.isFinalState() || depth >= max_depth) {
-            double value = (this.player == PLAYER1) ? state.getGameValue() : -state.getGameValue();
-            return new ActionValuePair(null, value);
+            return new ActionValuePair(null, state.getGameValue());
         }
 
         double maxValue = Double.NEGATIVE_INFINITY;
@@ -33,8 +36,8 @@ public class MinMaxPlayer extends Player {
             GameState nextState = (GameState) game.doAction(state, action);
             incStateCounter();
             ActionValuePair result = minValue(nextState, depth + 1);
-        
-            if (result.getValue() >= maxValue) {
+
+            if (result.getValue() > maxValue) {
                 maxValue = result.getValue();
                 bestAction = action;
             }
@@ -44,8 +47,7 @@ public class MinMaxPlayer extends Player {
 
     private ActionValuePair minValue(GameState state, int depth) {
         if (state.isFinalState() || depth >= max_depth) {
-            double value = (this.player == PLAYER1) ? state.getGameValue() : -state.getGameValue();
-            return new ActionValuePair(null, value);
+            return new ActionValuePair(null, state.getGameValue());
         }
 
         double minValue = Double.POSITIVE_INFINITY;
@@ -56,7 +58,7 @@ public class MinMaxPlayer extends Player {
             incStateCounter();
             ActionValuePair result = maxValue(nextState, depth + 1);
 
-            if (result.getValue() <= minValue) {
+            if (result.getValue() < minValue) {
                 minValue = result.getValue();
                 bestAction = action;
             }
