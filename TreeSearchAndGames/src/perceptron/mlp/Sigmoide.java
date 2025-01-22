@@ -18,14 +18,8 @@ public class Sigmoide implements TransferFunction{
      * @return sortie de la fonction dérivée sur l'entrée
      */
     public double evaluateDer(double value) {
-        //dérivée : σ'(x) = σ(x)−σ2(x))
-        //double sig = evaluate(value);
-        //return sig - sig * sig;
-
-        //ma version
         //dérivée : σ′(x)=σ(x)⋅(1−σ(x))
-        double sig = evaluate(value);
-        return sig * (1 - sig);
+        return value * (1 - value);
     }
 
 }
