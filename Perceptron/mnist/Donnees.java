@@ -3,6 +3,9 @@ package mnist;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Donnees {
@@ -60,14 +63,11 @@ public class Donnees {
     }
 
     public void shuffle() {
-        Random random = new Random();
-        for (int i = imagettes.length - 1; i > 0; i--) {
-            int index = random.nextInt(i + 1); // Génère un index aléatoire entre 0 et i
-            // Échange les positions entre imagettes[i] et imagettes[index]
-            Imagette temp = imagettes[i];
-            imagettes[i] = imagettes[index];
-            imagettes[index] = temp;
-        }
+        List<Imagette> tempList = Arrays.asList(imagettes);
+
+        Collections.shuffle(tempList);
+
+        imagettes = tempList.toArray(new Imagette[0]);
     }
 
     public double[][] getInputs() {
