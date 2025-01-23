@@ -15,12 +15,6 @@ public class Statistiques {
             Imagette imagetteTest = donneesTest.getImagette(i);
             int etiquettePredite = algo.predireEtiquette(imagetteTest, 1);
             System.out.println("Etiquette predite: " + etiquettePredite + ", Etiquette reelle: " + imagetteTest.getLabel());
-            if (etiquettePredite != imagetteTest.getLabel()) {
-                erreurs++;
-                // export imagetteTest
-                imagetteTest.saveAsImage("image" + i + "_label_" + imagetteTest.getLabel() + "_predite_" + etiquettePredite + ".png");
-            
-            }
         }
         return (double) erreurs / donneesTest.getTaille();
     }
