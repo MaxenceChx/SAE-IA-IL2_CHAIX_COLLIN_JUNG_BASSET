@@ -115,6 +115,18 @@ public abstract class AbstractMnkGameState extends GameState {
         return ( player == X ? O : X );
     }
 
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public int getStreak() {
+        return streak;
+    }
+
     /**
      * 
      *{@inheritDoc}
