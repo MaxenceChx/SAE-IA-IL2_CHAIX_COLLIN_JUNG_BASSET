@@ -1,0 +1,41 @@
+Influence du nombre de neurones :
+L'augmentation du nombre de neurones dans la couche cachée améliore généralement les performances jusqu'à un certain point
+Les configurations avec 150-250 neurones semblent offrir le meilleur compromis entre performance et temps de convergence
+Au-delà de 250 neurones, les gains de performance sont marginaux et le temps d'apprentissage augmente significativement
+Influence du nombre de couches :
+Une seule couche cachée offre déjà de bonnes performances
+L'ajout de couches supplémentaires n'améliore pas significativement les performances
+Les réseaux plus profonds (2-3 couches cachées) ont plus de mal à converger et sont plus lents à entraîner
+La configuration avec une seule couche cachée semble être le meilleur compromis pour ce problème
+Influence du taux d'apprentissage :
+Un taux d'apprentissage trop faible (0.01) ralentit considérablement la convergence
+Un taux trop élevé (0.15) peut causer une instabilité dans l'apprentissage
+Le taux de 0.09 semble offrir le meilleur compromis entre vitesse de convergence et stabilité
+Les performances finales sont similaires pour les taux 0.05-0.09-0.15, mais la vitesse de convergence diffère
+Decay du taux d'apprentissage :
+La décroissance du taux d'apprentissage n'a pas montré d'amélioration significative des performances
+La convergence est plus lente avec le decay
+Pour ce problème spécifique, un taux d'apprentissage fixe semble suffisant
+Impact du mélange des données :
+Le mélange des données améliore significativement la qualité de l'apprentissage
+La convergence est plus stable avec le mélange
+Les performances finales sont meilleures avec le mélange des données
+
+Différence entre base d'apprentissage et base de test :
+
+L'erreur sur la base d'apprentissage est systématiquement plus faible que sur la base de test
+Cette différence est normale et s'explique par le phénomène de surapprentissage (overfitting)
+C'est l'erreur sur la base de test qui doit faire référence car :
+Elle mesure la capacité de généralisation du réseau
+Elle est plus représentative des performances réelles sur des données nouvelles
+Elle permet de détecter le surapprentissage
+Elle fournit une estimation plus réaliste des performances en production
+
+En conclusion, la configuration optimale pour ce problème semble être :
+
+Une seule couche cachée avec 150-250 neurones
+Un taux d'apprentissage de 0.09
+Utilisation du mélange des données
+Pas de decay du taux d'apprentissage nécessaire
+
+

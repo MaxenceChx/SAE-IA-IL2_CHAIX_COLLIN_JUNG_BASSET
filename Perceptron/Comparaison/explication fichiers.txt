@@ -1,0 +1,38 @@
+Fichiers liés aux taux d'apprentissage :
+
+results_learning_rate_0.01.csv : Résultats avec un taux d'apprentissage de 0,01
+results_learning_rate_0.05.csv : Résultats avec un taux d'apprentissage de 0,05
+results_learning_rate_0.09.csv : Résultats avec un taux d'apprentissage de 0,09
+results_learning_rate_0.15.csv : Résultats avec un taux d'apprentissage de 0,15
+
+Fichiers liés au nombre de neurones dans la couche cachée :
+
+results_neurons_50.csv : Résultats avec 50 neurones dans la couche cachée
+results_neurons_100.csv : Résultats avec 100 neurones dans la couche cachée
+results_neurons_150.csv : Résultats avec 150 neurones dans la couche cachée
+results_neurons_250.csv : Résultats avec 250 neurones dans la couche cachée
+results_neurons_500.csv : Résultats avec 500 neurones dans la couche cachée
+
+Fichiers liés au nombre de couches cachées :
+
+results_layers_0.csv : Résultats sans couche cachée (entrée directement connectée à la sortie)
+results_layers_1.csv : Résultats avec une couche cachée
+results_layers_2.csv : Résultats avec deux couches cachées
+results_layers_3.csv : Résultats avec trois couches cachées
+
+Fichiers liés à la décroissance du taux d'apprentissage :
+
+results_decay_decay.csv : Résultats avec décroissance du taux d'apprentissage au fil des époques
+
+Fichiers liés au mélange des données :
+
+results_shuffle_shuffle.csv : Résultats avec mélange aléatoire des données à chaque époque
+results_shuffle_no_shuffle.csv : Résultats sans mélange des données
+
+Chaque fichier contient les mêmes colonnes :
+
+epoch : Numéro de l'époque
+train_error : Erreur sur l'ensemble d'apprentissage
+test_error : Erreur sur l'ensemble de test
+epoch_time : Temps d'exécution de l'époque (en millisecondes)
+convergence_time : Temps jusqu'à la convergence (en millisecondes) (convergence_time = 0 indique que l'erreur d'entraînement (trainError) n'est jamais passée en dessous du seuil de 0,1 pendant les 50 époques d'entraînement.)
