@@ -1,6 +1,4 @@
 public class Statistiques {
-    // Ecrire une classe Statistiques qui permet d’effectuer des statistiques `a partir d’un algorithme de classification donn´ e et d’un ensemble de donn´ ees de test.
-
     private AlgoClassification algo;
     private Donnees donneesTest;
 

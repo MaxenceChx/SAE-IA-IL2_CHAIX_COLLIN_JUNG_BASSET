@@ -4,19 +4,21 @@ import mnist.*;
 
 public class MNISTTrainer {
     public static void main(String[] args) {
-        String trainImagePath = "data/train-images-idx3-ubyte";
-        String trainLabelPath = "data/train-labels-idx1-ubyte";
-        String testImagePath = "data/t10k-images-idx3-ubyte";
-        String testLabelPath = "data/t10k-labels-idx1-ubyte";
+        String trainImagePath = "data.old/train-images-idx3-ubyte";
+        String trainLabelPath = "data.old/train-labels-idx1-ubyte";
+        String testImagePath = "data.old/t10k-images-idx3-ubyte";
+        String testLabelPath = "data.old/t10k-labels-idx1-ubyte";
 
         // Charger les données d'entraînement et de test
+        System.out.println("Chargement des données d'entraînement...");
         Donnees trainData = new Donnees(trainImagePath, trainLabelPath);
+        System.out.println("Chargement des données de test...");
         Donnees testData = new Donnees(testImagePath, testLabelPath);
 
         // Configuration du réseau
-        int[] layers = {784, 256, 128, 10}; // Exemple de configuration
+        int[] layers = {784, 256, 128, 10};
         double learningRate = 0.08;
-        TransferFunction transferFunction = new Sigmoide(); // Fonction de transfert exemple
+        TransferFunction transferFunction = new Sigmoide();
         MLP mlp = new MLP(layers, learningRate, transferFunction);
 
         // Paramètres d'entraînement
