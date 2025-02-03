@@ -19,6 +19,7 @@ public class Tanh implements TransferFunction {
      */
     public double evaluateDer(double value) {
         //dérivée : σ'(x) = 1−σ2(x)
-        return 1 - value * value;
+        double tanh = Math.tanh(value);
+        return 1 - tanh * tanh;
     }
 }

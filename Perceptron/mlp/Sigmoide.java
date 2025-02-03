@@ -19,7 +19,8 @@ public class Sigmoide implements TransferFunction{
      */
     public double evaluateDer(double value) {
         //dérivée : σ′(x)=σ(x)⋅(1−σ(x))
-        return value * (1 - value);
+        double sigmoid = evaluate(value);
+        return sigmoid * (1 - sigmoid);
     }
 
 }

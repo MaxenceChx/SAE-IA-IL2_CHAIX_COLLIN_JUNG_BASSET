@@ -17,8 +17,8 @@ public class MainMnist {
         Donnees testData = new Donnees(testImagePath, testLabelPath);
 
         // Initialisation des paramètres du MLP
-        int[] layers = {784, 512, 10};
-        double learningRate = 0.09;
+        int[] layers = {784, 500, 10};
+        double learningRate = 0.05;
         MLP mlp = new MLP(layers, learningRate, new Sigmoide());
 
         // Paramètres d'entraînement
